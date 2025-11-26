@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Метод БЭСТ — Обучение и Терапия / Метод БЕСТ — Навчання та Терапія</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700;900&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* ОСНОВНЫЕ СТИЛИ */
+        :root {
+            --primary-color: #2c3e50; /* Глубокий синий */
+            --accent-color: #c0392b;  /* Сдержанный красный */
+            --bg-light: #f9f9f9;
+            --text-color: #333;
+            --white: #ffffff;
+            --gold: #d4af37;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            line-height: 1.8;
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            background-color: var(--white);
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Merriweather', serif;
+            color: var(--primary-color);
+            margin-top: 0;
+        }
+
+        h1 { font-size: 3rem; font-weight: 900; line-height: 1.2; }
+        h2 { font-size: 2.2rem; margin-bottom: 2rem; position: relative; display: inline-block; }
+        h2::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            background-color: var(--accent-color);
+            margin-top: 10px;
+        }
+        h3 { font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem; }
+
+        p { margin-bottom: 1.5rem; font-weight: 400; }
+
+        /* КОНТЕЙНЕРЫ */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        section {
+            padding: 80px 0;
+        }
+
+        .bg-light { background-color: var(--bg-light); }
+        .bg-dark { background-color: var(--primary-color); color: var(--white); }
+        .bg-dark h2, .bg-dark h3, .bg-dark p { color: var(--white); }
+        .bg-dark h2::after { background-color: var(--white); }
+        
+        .text-center { text-align: center; }
+
+        /* ШАПКА */
+        header {
+            background-color: var(--white);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+
+        .logo {
+            font-family: 'Merriweather', serif;
+            font-weight: 900;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        .logo span { color: var(--accent-color); }
+
+        .nav-items {
+            display: flex;
+            align-items: center;
+        }
+
+        nav a {
+            margin-left: 30px;
+            text-decoration: none;
+            color: var(--primary-color);
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+
+        nav a:hover { color: var(--accent-color); }
+
+        /* Language Switcher */
+        .lang-switch {
+            margin-left: 30px;
+            display: flex;
+            border: 1px solid var(--primary-color);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .lang-btn {
+            background: none;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.8rem;
+            color: var(--primary-color);
+            transition: all 0.2s;
+        }
+
+        .lang-btn.active {
+            background-color: var(--primary-color);
+            color: var(--white);
+        }
+
+        .lang-btn:hover:not(.active) {
+            background-color: #f0f0f0;
+        }
+
+        /* HERO SECTION */
+        .hero {
+            padding-top: 180px;
+            padding-bottom: 120px;
+            background: linear-gradient(rgba(44, 62, 80, 0.9), rgba(44, 62, 80, 0.7)), url('https://placehold.co/1920x1080/2c3e50/ffffff?text=Energy+Healing') center/cover no-repeat;
+            color: var(--white);
+            text-align: center;
+        }
+
+        .hero h1 { color: var(--white); margin-bottom: 20px; }
+        .hero .subtitle {
+            font-size: 1.3rem;
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 300;
+            margin-bottom: 40px;
+            color: #ecf0f1;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: var(--white);
+            padding: 15px 40px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: transform 0.2s, background-color 0.2s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #a93226;
+            transform: translateY(-2px);
+        }
+
+        /* GRID LAYOUTS */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: start;
+        }
+        
+        .grid-2-center {
+             display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        /* AUDIENCE SECTION */
+        .audience-card {
+            background: var(--white);
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            height: 100%;
+            transition: transform 0.3s;
+            border-top: 5px solid transparent;
+        }
+        
+        .audience-card:hover { transform: translateY(-5px); }
+        
+        .audience-card.beginner { border-top-color: #2ecc71; }
+        .audience-card.pro { border-top-color: var(--accent-color); }
+        
+        .audience-icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        /* IMAGES */
+        .img-rounded {
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .img-circle {
+            border-radius: 50%;
+            width: 300px;
+            height: 300px;
+            object-fit: cover;
+            border: 8px solid var(--white);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            margin: 0 auto;
+        }
+
+        /* FEATURES / TILES */
+        .tile {
+            background: var(--white);
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border-top: 4px solid var(--primary-color);
+            text-align: left;
+        }
+
+        .tile i {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        /* LISTS */
+        .check-list { list-style: none; padding: 0; }
+        .check-list li {
+            padding-left: 30px;
+            position: relative;
+            margin-bottom: 15px;
+        }
+        .check-list li::before {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            color: var(--accent-color);
+            position: absolute;
+            left: 0;
+            top: 4px;
+        }
+
+        /* FORM STYLES */
+        .registration-form-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            text-align: left;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-family: 'Open Sans', sans-serif;
+            transition: border-color 0.3s;
+            box-sizing: border-box;
+        }
+        
+        .form-group input:focus {
+            border-color: var(--accent-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(192, 57, 43, 0.1);
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            font-size: 1.1rem;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .submit-btn:hover {
+            background-color: #a93226;
+        }
+
+        .submit-btn:disabled {
+            background-color: #bdc3c7;
+            cursor: not-allowed;
+        }
+
+        .form-message {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+            text-align: center;
+        }
+        
+        .form-message.success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        
+        .form-message.error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        /* QUOTE */
+        blockquote {
+            font-size: 1.6rem;
+            font-family: 'Merriweather', serif;
+            font-style: italic;
+            text-align: center;
+            margin: 0;
+            padding: 40px;
+            border-left: none;
+            color: var(--primary-color);
+        }
+        blockquote cite {
+            display: block;
+            font-size: 1rem;
+            margin-top: 20px;
+            font-family: 'Open Sans', sans-serif;
+            font-style: normal;
+            font-weight: 600;
+            color: var(--accent-color);
+        }
+
+        /* FOOTER */
+        footer {
+            background-color: #233140;
+            color: #bdc3c7;
+            padding: 60px 0;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        /* MOBILE ADAPTATION */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.2rem; }
+            h2 { font-size: 1.8rem; }
+            .grid-2, .grid-2-center { grid-template-columns: 1fr; gap: 40px; }
+            .nav-wrapper { flex-direction: column; height: auto; padding: 20px 0; }
+            .nav-items { flex-direction: column; width: 100%; }
+            nav { margin-top: 15px; display: flex; flex-direction: column; align-items: center; }
+            nav a { margin: 5px 0; }
+            .lang-switch { margin: 15px 0 0 0; }
+            .registration-form-container { padding: 25px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Навигация -->
+    <header>
+        <div class="container nav-wrapper">
+            <a href="#" class="logo" data-translate="logo">Метод <span>БЭСТ</span></a>
+            <div class="nav-items">
+                <nav>
+                    <a href="#about" data-translate="nav_about">О методе</a>
+                    <a href="#audience" data-translate="nav_audience">Для кого</a>
+                    <a href="#depth" data-translate="nav_depth">Глубина</a>
+                    <a href="#training" data-translate="nav_training">Обучение</a>
+                </nav>
+                <div class="lang-switch">
+                    <button class="lang-btn" onclick="setLanguage('uk')">UA</button>
+                    <button class="lang-btn active" onclick="setLanguage('ru')">RU</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Главный экран -->
+    <section class="hero">
+        <div class="container">
+            <h1 data-translate="hero_title">БЭСТ: Больше, чем массаж</h1>
+            <p class="subtitle" data-translate="hero_subtitle">Уникальная система исцеления души через тело. <br>От новичка до мастера за один фундаментальный курс.</p>
+            <a href="#training" class="btn" data-translate="hero_btn">Записаться на курс</a>
+        </div>
+    </section>
+
+    <!-- О методе -->
+    <section id="about">
+        <div class="container">
+            <div class="grid-2-center">
+                <div>
+                    <h2 data-translate="about_title">Наследие Зуева</h2>
+                    <p data-translate="about_p1"><strong>Био-Энерго-Системо-Терапия (БЭСТ)</strong> — это авторский метод Е.И. Зуева, который опередил свое время. Это синтез древних восточных практик, классической медицины, психологии и интуитивного целительства.</p>
+                    <p data-translate="about_p2">Метод работает с "памятью тела". Любая непрожитая эмоция, стресс или травма оставляют след в мышцах и фасциях. Обычный массаж может размять мышцу, но БЭСТ находит <em>причину</em> напряжения и "выключает" её через работу с нервной системой и биополем.</p>
+                    <p data-translate="about_p3">Это работа не с диагнозом, а с Живым Человеком во всей его многогранности.</p>
+                </div>
+                <div>
+                    <img src="https://placehold.co/600x500/2c3e50/ffffff?text=Therapy+Session" alt="Сеанс терапии" class="img-rounded">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ДЛЯ КОГО -->
+    <section id="audience" class="bg-light">
+        <div class="container">
+            <h2 class="text-center" style="display: block; margin-bottom: 60px;" data-translate="audience_title">Кому необходим этот навык?</h2>
+            <div class="grid-2">
+                <!-- Для новичков -->
+                <div class="audience-card beginner">
+                    <i class="fa-solid fa-seedling audience-icon" style="color: #2ecc71;"></i>
+                    <h3 data-translate="beginner_title">Для начинающих</h3>
+                    <p data-translate="beginner_desc">Даже если вы никогда не делали массаж, БЭСТ даст вам мощный старт.</p>
+                    <ul class="check-list">
+                        <li data-translate="beginner_li1"><strong>Быстрый вход:</strong> Вы учитесь не механическим движениям, а умению <em>слышать</em> тело руками.</li>
+                        <li data-translate="beginner_li2"><strong>Конкурентное преимущество:</strong> Пока другие учат классику, вы сразу предлагаете глубокую терапию.</li>
+                        <li data-translate="beginner_li3"><strong>Целостный взгляд:</strong> Вы сразу поймете взаимосвязь эмоций и физиологии, избежав ошибок новичков.</li>
+                    </ul>
+                </div>
+                
+                <!-- Для профессионалов -->
+                <div class="audience-card pro">
+                    <i class="fa-solid fa-user-doctor audience-icon" style="color: var(--accent-color);"></i>
+                    <h3 data-translate="pro_title">Для профессионалов</h3>
+                    <p data-translate="pro_desc">Для массажистов, мануальных терапевтов, остеопатов, психологов.</p>
+                    <ul class="check-list">
+                        <li data-translate="pro_li1"><strong>Работа со "сложными" клиентами:</strong> Когда классика не помогает и боль возвращается, БЭСТ убирает психосоматический корень.</li>
+                        <li data-translate="pro_li2"><strong>Энергетическая безопасность:</strong> Вы перестанете уставать и "брать на себя" чужие проблемы.</li>
+                        <li data-translate="pro_li3"><strong>Расширение прайса:</strong> Эксклюзивная услуга стоит дороже обычного сеанса.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Глубина метода -->
+    <section id="depth">
+        <div class="container">
+            <h2 class="text-center" style="display: block; margin-bottom: 50px;" data-translate="depth_title">Грани Метода</h2>
+            <div class="grid-3">
+                <div class="tile">
+                    <i class="fa-solid fa-hand-sparkles"></i>
+                    <h3 data-translate="tech1_title">Диагностика касанием</h3>
+                    <p data-translate="tech1_desc">Вы научитесь определять зоны застоя энергии ("холодные" зоны) и воспаления ("горячие" зоны) еще до того, как клиент расскажет о своих жалобах. Руки становятся чувствительным сканером.</p>
+                </div>
+                <div class="tile">
+                    <i class="fa-solid fa-arrows-to-circle"></i>
+                    <h3 data-translate="tech2_title">Снятие "Панциря"</h3>
+                    <p data-translate="tech2_desc">Термин Вильгельма Райха "мышечный панцирь" здесь обретает практическое решение. БЭСТ использует растяжки, вибрации и точечное воздействие, чтобы освободить тело от скованности.</p>
+                </div>
+                <div class="tile">
+                    <i class="fa-solid fa-infinity"></i>
+                    <h3 data-translate="tech3_title">Работа с потоком</h3>
+                    <p data-translate="tech3_desc">Бесконтактные техники позволяют выравнивать биополе, восстанавливать сон и гармонизировать эмоциональное состояние клиента без жесткого физического вмешательства.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Для специалиста (Ресурс) -->
+    <section class="bg-dark">
+        <div class="container">
+            <div class="grid-2-center">
+                <div class="text-center">
+                    <img src="https://placehold.co/400x400/ffffff/2c3e50?text=Master" alt="Мастер" class="img-circle">
+                </div>
+                <div>
+                    <h2 data-translate="resource_title">Секрет долголетия в профессии</h2>
+                    <p data-translate="resource_p1">Многие массажисты уходят из профессии через 5-7 лет из-за проблем с суставами и выгорания. Метод БЭСТ учит эргономике движений и энергетической гигиене.</p>
+                    <p data-translate="resource_p2">Вы работаете не силой мышц, а весом тела и потоком энергии. После сеанса вы чувствуете прилив сил, а не опустошение.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Цитата -->
+    <section>
+        <div class="container">
+            <blockquote data-translate="quote_text">
+                "Человек — это процесс. Остановите процесс болезни, запустите процесс жизни."
+                <cite data-translate="quote_author">— Из философии метода</cite>
+            </blockquote>
+        </div>
+    </section>
+
+    <!-- Форма записи -->
+    <section id="training" class="bg-light text-center">
+        <div class="container">
+            <h2 data-translate="form_title">Запишитесь на курс</h2>
+            <p style="max-width: 700px; margin: 0 auto 40px auto; font-size: 1.1rem;" data-translate="form_subtitle">
+                Оставьте заявку, и мы свяжемся с вами для уточнения деталей обучения и дат старта ближайшей группы.
+            </p>
+            
+            <div class="registration-form-container">
+                <form name="submit-to-google-sheet" id="courseForm">
+                    <div class="form-group">
+                        <label for="name" data-translate="label_name">Ваше имя *</label>
+                        <input type="text" id="name" name="name" placeholder="Іван Іванов" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone" data-translate="label_phone">Ваш телефон *</label>
+                        <input type="tel" id="phone" name="phone" placeholder="+380 (XX) XXX-XX-XX" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email" data-translate="label_email">Email</label>
+                        <input type="email" id="email" name="email" placeholder="example@gmail.com">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="referrer" data-translate="label_referrer">Кто порекомендовал</label>
+                        <input type="text" id="referrer" name="referrer" placeholder="Имя рекомендателя или откуда узнали">
+                    </div>
+
+                    <button type="submit" class="submit-btn" data-translate="btn_submit">Отправить заявку</button>
+                    
+                    <div class="form-message" id="formMessage"></div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p data-translate="footer_copy">&copy; 2024 Академия БЭСТ. Все права защищены.</p>
+            <p style="margin-top: 10px; font-size: 0.8rem; color: #7f8c8d;" data-translate="footer_disclaimer">
+                Информация носит ознакомительный характер.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        const scriptURL = 'YOUR_GOOGLE_SCRIPT_URL_HERE'; 
+
+        // TRANSLATIONS
+        const translations = {
+            ru: {
+                logo: 'Метод <span>БЭСТ</span>',
+                nav_about: 'О методе',
+                nav_audience: 'Для кого',
+                nav_depth: 'Глубина',
+                nav_training: 'Обучение',
+                hero_title: 'БЭСТ: Больше, чем массаж',
+                hero_subtitle: 'Уникальная система исцеления души через тело. <br>От новичка до мастера за один фундаментальный курс.',
+                hero_btn: 'Записаться на курс',
+                about_title: 'Наследие Зуева',
+                about_p1: '<strong>Био-Энерго-Системо-Терапия (БЭСТ)</strong> — это авторский метод Е.И. Зуева, который опередил свое время. Это синтез древних восточных практик, классической медицины, психологии и интуитивного целительства.',
+                about_p2: 'Метод работает с "памятью тела". Любая непрожитая эмоция, стресс или травма оставляют след в мышцах и фасциях. Обычный массаж может размять мышцу, но БЭСТ находит <em>причину</em> напряжения и "выключает" её через работу с нервной системой и биополем.',
+                about_p3: 'Это работа не с диагнозом, а с Живым Человеком во всей его многогранности.',
+                audience_title: 'Кому необходим этот навык?',
+                beginner_title: 'Для начинающих',
+                beginner_desc: 'Даже если вы никогда не делали массаж, БЭСТ даст вам мощный старт.',
+                beginner_li1: '<strong>Быстрый вход:</strong> Вы учитесь не механическим движениям, а умению <em>слышать</em> тело руками.',
+                beginner_li2: '<strong>Конкурентное преимущество:</strong> Пока другие учат классику, вы сразу предлагаете глубокую терапию.',
+                beginner_li3: '<strong>Целостный взгляд:</strong> Вы сразу поймете взаимосвязь эмоций и физиологии, избежав ошибок новичков.',
+                pro_title: 'Для профессионалов',
+                pro_desc: 'Для массажистов, мануальных терапевтов, остеопатов, психологов.',
+                pro_li1: '<strong>Работа со "сложными" клиентами:</strong> Когда классика не помогает и боль возвращается, БЭСТ убирает психосоматический корень.',
+                pro_li2: '<strong>Энергетическая безопасность:</strong> Вы перестанете уставать и "брать на себя" чужие проблемы.',
+                pro_li3: '<strong>Расширение прайса:</strong> Эксклюзивная услуга стоит дороже обычного сеанса.',
+                depth_title: 'Грани Метода',
+                tech1_title: 'Диагностика касанием',
+                tech1_desc: 'Вы научитесь определять зоны застоя энергии ("холодные" зоны) и воспаления ("горячие" зоны) еще до того, как клиент расскажет о своих жалобах. Руки становятся чувствительным сканером.',
+                tech2_title: 'Снятие "Панциря"',
+                tech2_desc: 'Термин Вильгельма Райха "мышечный панцирь" здесь обретает практическое решение. БЭСТ использует растяжки, вибрации и точечное воздействие, чтобы освободить тело от скованности.',
+                tech3_title: 'Работа с потоком',
+                tech3_desc: 'Бесконтактные техники позволяют выравнивать биополе, восстанавливать сон и гармонизировать эмоциональное состояние клиента без жесткого физического вмешательства.',
+                resource_title: 'Секрет долголетия в профессии',
+                resource_p1: 'Многие массажисты уходят из профессии через 5-7 лет из-за проблем с суставами и выгорания. Метод БЭСТ учит эргономике движений и энергетической гигиене.',
+                resource_p2: 'Вы работаете не силой мышц, а весом тела и потоком энергии. После сеанса вы чувствуете прилив сил, а не опустошение.',
+                quote_text: '"Человек — это процесс. Остановите процесс болезни, запустите процесс жизни."',
+                quote_author: '— Из философии метода',
+                form_title: 'Запишитесь на курс',
+                form_subtitle: 'Оставьте заявку, и мы свяжемся с вами для уточнения деталей обучения и дат старта ближайшей группы.',
+                label_name: 'Ваше имя *',
+                label_phone: 'Ваш телефон *',
+                label_email: 'Email',
+                label_referrer: 'Кто порекомендовал',
+                placeholder_name: 'Иван Иванов',
+                placeholder_phone: '+380 (XX) XXX-XX-XX',
+                placeholder_referrer: 'Имя рекомендателя или откуда узнали',
+                btn_submit: 'Отправить заявку',
+                footer_copy: '&copy; 2024 Академия БЭСТ. Все права защищены.',
+                footer_disclaimer: 'Информация носит ознакомительный характер.',
+                msg_success: 'Спасибо! Ваша заявка успешно отправлена.',
+                msg_error: 'Ошибка при отправке. Пожалуйста, проверьте соединение или позвоните нам.',
+                msg_demo: '<strong>Демо режим:</strong> Форма работает визуально, но для отправки данных нужно подключить Google Таблицу (см. инструкцию).'
+            },
+            uk: {
+                logo: 'Метод <span>БЕСТ</span>',
+                nav_about: 'Про метод',
+                nav_audience: 'Для кого',
+                nav_depth: 'Глибина',
+                nav_training: 'Навчання',
+                hero_title: 'БЕСТ: Більше, ніж масаж',
+                hero_subtitle: 'Унікальна система зцілення душі через тіло. <br>Від новачка до майстра за один фундаментальний курс.',
+                hero_btn: 'Записатися на курс',
+                about_title: 'Спадщина Зуєва',
+                about_p1: '<strong>Біо-Енерго-Системо-Терапія (БЕСТ)</strong> — це авторський метод Є.Й. Зуєва, який випередив свій час. Це синтез стародавніх східних практик, класичної медицини, психології та інтуїтивного цілительства.',
+                about_p2: 'Метод працює з "пам\'яттю тіла". Будь-яка непережита емоція, стрес або травма залишають слід у м\'язах і фасціях. Звичайний масаж може розім\'яти м\'яз, але БЕСТ знаходить <em>причину</em> напруги і "вимикає" її через роботу з нервовою системою та біополем.',
+                about_p3: 'Це робота не з діагнозом, а з Живою Людиною у всій її багатогранності.',
+                audience_title: 'Кому необхідна ця навичка?',
+                beginner_title: 'Для початківців',
+                beginner_desc: 'Навіть якщо ви ніколи не робили масаж, БЕСТ дасть вам потужний старт.',
+                beginner_li1: '<strong>Швидкий вхід:</strong> Ви вчитеся не механічним рухам, а вмінню <em>чути</em> тіло руками.',
+                beginner_li2: '<strong>Конкурентна перевага:</strong> Поки інші вчать класику, ви відразу пропонуєте глибоку терапію.',
+                beginner_li3: '<strong>Цілісний погляд:</strong> Ви відразу зрозумієте взаємозв\'язок емоцій і фізіології, уникнувши помилок новачків.',
+                pro_title: 'Для професіоналів',
+                pro_desc: 'Для масажистів, мануальних терапевтів, остеопатів, психологів.',
+                pro_li1: '<strong>Робота зі "складними" клієнтами:</strong> Коли класика не допомагає і біль повертається, БЕСТ прибирає психосоматичний корінь.',
+                pro_li2: '<strong>Енергетична безпека:</strong> Ви перестанете втомлюватися і "брати на себе" чужі проблеми.',
+                pro_li3: '<strong>Розширення прайсу:</strong> Ексклюзивна послуга коштує дорожче звичайного сеансу.',
+                depth_title: 'Грані Методу',
+                tech1_title: 'Діагностика дотиком',
+                tech1_desc: 'Ви навчитеся визначати зони застою енергії ("холодні" зони) і запалення ("гарячі" зони) ще до того, як клієнт розповість про свої скарги. Руки стають чутливим сканером.',
+                tech2_title: 'Зняття "Панцира"',
+                tech2_desc: 'Термін Вільгельма Райха "м\'язовий панцир" тут знаходить практичне рішення. БЕСТ використовує розтяжки, вібрації і точковий вплив, щоб звільнити тіло від скутості.',
+                tech3_title: 'Робота з потоком',
+                tech3_desc: 'Безконтактні техніки дозволяють вирівнювати біополе, відновлювати сон і гармонізувати емоційний стан клієнта без жорсткого фізичного втручання.',
+                resource_title: 'Секрет довголіття в професії',
+                resource_p1: 'Багато масажистів йдуть з професії через 5-7 років через проблеми з суглобами і вигорання. Метод БЕСТ вчить ергономіці рухів і енергетичній гігієні.',
+                resource_p2: 'Ви працюєте не силою м\'язів, а вагою тіла і потоком енергії. Після сеансу ви відчуваєте приплив сил, а не спустошення.',
+                quote_text: '"Людина — це процес. Зупиніть процес хвороби, запустіть процес життя."',
+                quote_author: '— З філософії методу',
+                form_title: 'Запишіться на курс',
+                form_subtitle: 'Залиште заявку, і ми зв\'яжемося з вами для уточнення деталей навчання і дат старту найближчої групи.',
+                label_name: 'Ваше ім\'я *',
+                label_phone: 'Ваш телефон *',
+                label_email: 'Email',
+                label_referrer: 'Хто порекомендував',
+                placeholder_name: 'Іван Іванов',
+                placeholder_phone: '+380 (XX) XXX-XX-XX',
+                placeholder_referrer: 'Ім\'я рекомендателя або звідки дізналися',
+                btn_submit: 'Відправити заявку',
+                footer_copy: '&copy; 2024 Академія БЕСТ. Всі права захищені.',
+                footer_disclaimer: 'Інформація носить ознайомлювальний характер.',
+                msg_success: 'Дякуємо! Ваша заявка успішно відправлена.',
+                msg_error: 'Помилка при відправці. Будь ласка, перевірте з\'єднання або зателефонуйте нам.',
+                msg_demo: '<strong>Демо режим:</strong> Форма працює візуально, але для відправки даних потрібно підключити Google Таблицю (див. інструкцію).'
+            }
+        };
+
+        let currentLang = 'ru';
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            
+            // Toggle active button
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelector(`.lang-btn[onclick="setLanguage('${lang}')"]`).classList.add('active');
+
+            // Translate text content
+            document.querySelectorAll('[data-translate]').forEach(el => {
+                const key = el.getAttribute('data-translate');
+                if (translations[lang][key]) {
+                    el.innerHTML = translations[lang][key];
+                }
+            });
+
+            // Translate placeholders
+            document.getElementById('name').placeholder = translations[lang]['placeholder_name'];
+            document.getElementById('phone').placeholder = translations[lang]['placeholder_phone'];
+            document.getElementById('referrer').placeholder = translations[lang]['placeholder_referrer'];
+            
+            // Update Title
+            document.title = lang === 'uk' ? 'Метод БЕСТ — Навчання та Терапія' : 'Метод БЭСТ — Обучение и Терапия';
+        }
+
+        const form = document.getElementById('courseForm');
+        const messageDiv = document.getElementById('formMessage');
+        const submitButton = form.querySelector('.submit-btn');
+
+        form.addEventListener('submit', e => {
+            e.preventDefault();
+            
+            submitButton.disabled = true;
+            submitButton.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> ...';
+
+            if (scriptURL === 'https://script.google.com/macros/s/AKfycbxndtBbLsitKI4fmMQaM2CJY7UGNcgz_FzcTEgUpULsoo6gp2_cuPWhqAkNJskXlYs8rg/exec' || scriptURL === '') {
+                setTimeout(() => {
+                    messageDiv.innerHTML = translations[currentLang].msg_demo;
+                    messageDiv.className = 'form-message success';
+                    messageDiv.style.display = 'block';
+                    submitButton.disabled = false;
+                    submitButton.innerHTML = translations[currentLang].btn_submit;
+                    form.reset();
+                }, 1000);
+                return;
+            }
+
+            fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+                .then(response => {
+                    messageDiv.textContent = translations[currentLang].msg_success;
+                    messageDiv.className = 'form-message success';
+                    messageDiv.style.display = 'block';
+                    form.reset();
+                    submitButton.disabled = false;
+                    submitButton.innerHTML = translations[currentLang].btn_submit;
+                })
+                .catch(error => {
+                    messageDiv.textContent = translations[currentLang].msg_error;
+                    messageDiv.className = 'form-message error';
+                    messageDiv.style.display = 'block';
+                    console.error('Error!', error.message);
+                    submitButton.disabled = false;
+                    submitButton.innerHTML = translations[currentLang].btn_submit;
+                });
+        });
+    </script>
+
+</body>
+</html>
