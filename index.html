@@ -13,7 +13,6 @@
     <meta property="og:url" content="https://laspii.github.io/bio-energy-system-therapy/">
     <meta property="og:title" content="Метод БЭСТ — Глубинная терапия тела и души">
     <meta property="og:description" content="Обучение для массажистов: от новичка до мастера. Устранение психосоматики, энергетическая безопасность и уникальные техники Зуева.">
-    <!-- ИСПРАВЛЕНО: Полный путь к изображению -->
     <meta property="og:image" content="https://laspii.github.io/bio-energy-system-therapy/best_round_logo.png">
     <meta property="og:locale" content="ru_RU">
     <meta property="og:locale:alternate" content="uk_UA">
@@ -24,7 +23,6 @@
     <meta property="twitter:url" content="https://laspii.github.io/bio-energy-system-therapy/">
     <meta name="twitter:title" content="Метод БЭСТ — Глубинная терапия тела и души">
     <meta name="twitter:description" content="Обучение для массажистов: от новичка до мастера. Устранение психосоматики, энергетическая безопасность.">
-    <!-- ИСПРАВЛЕНО: Полный путь к изображению -->
     <meta name="twitter:image" content="https://laspii.github.io/bio-energy-system-therapy/best_round_logo.png">
 
     <link rel="icon" href="favicon.png" type="image/png">
@@ -50,6 +48,7 @@
             margin: 0;
             padding: 0;
             background-color: var(--white);
+            padding-top: 70px; /* Отступ для фиксированной шапки */
         }
 
         h1, h2, h3, h4 {
@@ -93,18 +92,20 @@
         /* ШАПКА */
         header {
             background-color: var(--white);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             position: fixed;
             width: 100%;
             top: 0;
+            left: 0;
             z-index: 1000;
+            height: 70px; /* Фиксированная высота шапки */
         }
 
         .nav-wrapper {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            height: 70px;
+            height: 100%;
         }
 
         .logo {
@@ -113,10 +114,12 @@
             font-size: 1.5rem;
             color: var(--primary-color);
             text-decoration: none;
+            z-index: 1002;
         }
         .logo span { color: var(--accent-color); }
 
-        .nav-items {
+        /* Контейнер для меню и языка */
+        .nav-container {
             display: flex;
             align-items: center;
         }
@@ -162,14 +165,22 @@
             background-color: #f0f0f0;
         }
 
+        /* Кнопка гамбургер (скрыта на ПК) */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            cursor: pointer;
+            z-index: 1002;
+        }
+
         /* HERO SECTION */
         .hero {
-            padding-top: 180px;
+            padding-top: 120px;
             padding-bottom: 120px;
-            /* background: linear-gradient(rgba(44, 62, 80, 0.9), rgba(44, 62, 80, 0.7)), url('https://placehold.co/1920x1080/2c3e50/ffffff?text=Energy+Healing') center/cover no-repeat;
-            */
             background: linear-gradient(rgba(44, 62, 80, 0.9), rgba(44, 62, 80, 0.7)), url('https://laspii.github.io/bio-energy-system-therapy/best_round_logo.png') center/cover no-repeat;
-            
             color: var(--white);
             text-align: center;
         }
@@ -411,15 +422,51 @@
 
         /* MOBILE ADAPTATION */
         @media (max-width: 768px) {
-            h1 { font-size: 2.2rem; }
+            h1 { font-size: 2rem; }
             h2 { font-size: 1.8rem; }
             .grid-2, .grid-2-center { grid-template-columns: 1fr; gap: 40px; }
             .grid-3 { grid-template-columns: 1fr; }
-            .nav-wrapper { flex-direction: column; height: auto; padding: 20px 0; }
-            .nav-items { flex-direction: column; width: 100%; }
-            nav { margin-top: 15px; display: flex; flex-direction: column; align-items: center; }
-            nav a { margin: 5px 0; }
-            .lang-switch { margin: 15px 0 0 0; }
+            
+            /* Мобильное меню */
+            .mobile-menu-btn { display: block; }
+            
+            .nav-container {
+                position: absolute;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background-color: var(--white);
+                flex-direction: column;
+                padding: 20px 0;
+                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+                /* Скрыто по умолчанию */
+                transform: translateY(-150%);
+                transition: transform 0.3s ease-in-out;
+                z-index: 1001;
+                opacity: 0;
+                visibility: hidden;
+            }
+
+            .nav-container.active {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+            }
+
+            nav { 
+                display: flex; 
+                flex-direction: column; 
+                align-items: center; 
+                width: 100%;
+            }
+            
+            nav a { 
+                margin: 10px 0; 
+                font-size: 1.1rem;
+            }
+            
+            .lang-switch { margin: 20px 0 0 0; }
+            
             .registration-form-container { padding: 25px; }
         }
     </style>
@@ -430,7 +477,14 @@
     <header>
         <div class="container nav-wrapper">
             <a href="#" class="logo" data-translate="logo">Метод <span>БЭСТ</span></a>
-            <div class="nav-items">
+            
+            <!-- Кнопка мобильного меню -->
+            <button class="mobile-menu-btn" aria-label="Menu">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+
+            <!-- Контейнер навигации (меню + языки) -->
+            <div class="nav-container">
                 <nav>
                     <a href="#about" data-translate="nav_about">О методе</a>
                     <a href="#audience" data-translate="nav_audience">Для кого</a>
@@ -475,7 +529,7 @@
     <section id="audience" class="bg-light">
         <div class="container">
             <h2 class="text-center" style="display: block; margin-bottom: 20px;" data-translate="audience_title">Кому необходим этот навык?</h2>
-            <p class="text-center" style="margin-bottom: 60px; color: #7f8c8d;" data-translate="audience_subtitle">Для тех, кто готов взять ответственность за свою жизнь и здоровье.</p>
+            <p class="text-center" style="margin-bottom: 60px; color: #7f8c8d;" data-translate="audience_subtitle">Для тех, кто готов взять ответственность за свою жизнь и здоровье, а не искать виноватых.</p>
             <div class="grid-2">
                 <!-- Для новичков -->
                 <div class="audience-card beginner">
@@ -773,7 +827,7 @@
             }
 
             fetch(scriptURL, { method: 'POST', body: new FormData(form)})
-                .then(response => response.json()) // Пытаемся прочитать ответ от скрипта
+                .then(response => response.json()) 
                 .then(response => {
                     if (response.result === 'success') {
                         messageDiv.textContent = translations[currentLang].msg_success;
@@ -781,7 +835,6 @@
                         messageDiv.style.display = 'block';
                         form.reset();
                     } else {
-                        // Если скрипт вернул ошибку (например, не нашел лист)
                         throw new Error(JSON.stringify(response.error));
                     }
                     submitButton.disabled = false;
@@ -796,6 +849,51 @@
                     submitButton.innerHTML = translations[currentLang].btn_submit;
                 });
         });
+
+        /* ЛОГИКА МОБИЛЬНОГО МЕНЮ */
+        const menuBtn = document.querySelector('.mobile-menu-btn');
+        const navContainer = document.querySelector('.nav-container');
+
+        if(menuBtn && navContainer) {
+            // Открыть/Закрыть по кнопке
+            menuBtn.addEventListener('click', () => {
+                navContainer.classList.toggle('active');
+                
+                // Меняем иконку (бургер <-> крестик)
+                const icon = menuBtn.querySelector('i');
+                if (navContainer.classList.contains('active')) {
+                    icon.classList.remove('fa-bars');
+                    icon.classList.add('fa-times');
+                } else {
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                }
+            });
+
+            // Закрыть при клике на ссылку
+            const navLinks = navContainer.querySelectorAll('a');
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    if (window.innerWidth <= 768) {
+                        closeMenu();
+                    }
+                });
+            });
+
+            // Закрыть при скролле (как вы просили)
+            window.addEventListener('scroll', () => {
+                if (window.innerWidth <= 768 && navContainer.classList.contains('active')) {
+                   closeMenu();
+                }
+            });
+
+            function closeMenu() {
+                navContainer.classList.remove('active');
+                const icon = menuBtn.querySelector('i');
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        }
     </script>
 
 </body>
