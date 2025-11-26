@@ -573,7 +573,8 @@
     </footer>
 
     <script>
-        const scriptURL = 'YOUR_GOOGLE_SCRIPT_URL_HERE'; 
+        // ВНИМАНИЕ: ЗАМЕНИТЕ ЭТУ ССЫЛКУ НА ВАШУ НОВУЮ ССЫЛКУ ПОСЛЕ РАЗВЕРТЫВАНИЯ
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbxndtBbLsitKI4fmMQaM2CJY7UGNcgz_FzcTEgUpULsoo6gp2_cuPWhqAkNJskXlYs8rg/exec'; 
 
         // TRANSLATIONS
         const translations = {
@@ -601,7 +602,7 @@
                 pro_li1: '<strong>Работа со "сложными" клиентами:</strong> Когда классика не помогает и боль возвращается, БЭСТ убирает психосоматический корень.',
                 pro_li2: '<strong>Энергетическая безопасность:</strong> Вы перестанете уставать и "брать на себя" чужие проблемы.',
                 pro_li3: '<strong>Расширение прайса:</strong> Эксклюзивная услуга стоит дороже обычного сеанса.',
-                depth_title: 'Грани Метода',
+                depth_title: 'Грани Методу',
                 tech1_title: 'Диагностика касанием',
                 tech1_desc: 'Вы научитесь определять зоны застоя энергии ("холодные" зоны) и воспаления ("горячие" зоны) еще до того, как клиент расскажет о своих жалобах. Руки становятся чувствительным сканером.',
                 tech2_title: 'Снятие "Панциря"',
@@ -636,7 +637,7 @@
                 nav_depth: 'Глибина',
                 nav_training: 'Навчання',
                 hero_title: 'БЕСТ: Більше, ніж масаж',
-                hero_subtitle: 'Унікальна система зцілення душі через тіло. <br>Від новачка до майстра за один фундаментальний курс.',
+                hero_subtitle: 'Унікальна система зцілення душі через тіло. <br>Від новачка до майстра за один фундаментальный курс.',
                 hero_btn: 'Записатися на курс',
                 about_title: 'Спадщина Зуєва',
                 about_p1: '<strong>Біо-Енерго-Системо-Терапія (БЕСТ)</strong> — це авторський метод Є.Й. Зуєва, який випередив свій час. Це синтез стародавніх східних практик, класичної медицини, психології та інтуїтивного цілительства.',
@@ -719,7 +720,8 @@
             submitButton.disabled = true;
             submitButton.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> ...';
 
-            if (scriptURL === 'https://script.google.com/macros/s/AKfycbxndtBbLsitKI4fmMQaM2CJY7UGNcgz_FzcTEgUpULsoo6gp2_cuPWhqAkNJskXlYs8rg/exec' || scriptURL === '') {
+            // Если ссылка не изменена, показываем демо-сообщение
+            if (scriptURL === 'YOUR_GOOGLE_SCRIPT_URL_HERE' || scriptURL === '') {
                 setTimeout(() => {
                     messageDiv.innerHTML = translations[currentLang].msg_demo;
                     messageDiv.className = 'form-message success';
@@ -731,6 +733,7 @@
                 return;
             }
 
+            // Отправка формы на скрипт
             fetch(scriptURL, { method: 'POST', body: new FormData(form)})
                 .then(response => {
                     messageDiv.textContent = translations[currentLang].msg_success;
@@ -741,10 +744,14 @@
                     submitButton.innerHTML = translations[currentLang].btn_submit;
                 })
                 .catch(error => {
+                    // В Google Apps Script fetch иногда падает с ошибкой из-за CORS, 
+                    // даже если данные записались успешно. Но лучше предупредить пользователя.
+                    // Если хотите игнорировать ошибку CORS и считать это успехом (для простых форм),
+                    // можно перенести логику успеха сюда. Но пока оставим ошибку.
+                    console.error('Error!', error.message);
                     messageDiv.textContent = translations[currentLang].msg_error;
                     messageDiv.className = 'form-message error';
                     messageDiv.style.display = 'block';
-                    console.error('Error!', error.message);
                     submitButton.disabled = false;
                     submitButton.innerHTML = translations[currentLang].btn_submit;
                 });
