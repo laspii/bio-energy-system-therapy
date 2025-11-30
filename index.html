@@ -83,7 +83,7 @@
                 --color-1 0.5s, --color-2 0.5s, --color-3 0.5s, --color-4 0.5s, --color-5 0.5s,
                 --border-angle 0.5s, --border-color-1 0.5s, --border-color-2 0.5s,
                 --stop-1 0.5s, --stop-2 0.5s, --stop-3 0.5s, --stop-4 0.5s, --stop-5 0.5s,
-                transform 0.2s; /* Added minor scale transform */
+                transform 0.2s;
         }
 
         .gradient-button::before {
@@ -142,7 +142,7 @@
             margin: 0;
             padding: 0;
             background-color: var(--white);
-            padding-top: 70px; /* Отступ для фиксированной шапки */
+            padding-top: 70px;
         }
 
         h1, h2, h3, h4 {
@@ -192,7 +192,7 @@
             top: 0;
             left: 0;
             z-index: 1000;
-            height: 70px; /* Фиксированная высота шапки */
+            height: 70px;
         }
 
         .nav-wrapper {
@@ -435,7 +435,8 @@
             color: var(--primary-color);
         }
         
-        .form-group input {
+        .form-group input, 
+        .form-group select {
             width: 100%;
             padding: 12px 15px;
             border: 1px solid #ddd;
@@ -444,9 +445,11 @@
             font-family: 'Open Sans', sans-serif;
             transition: border-color 0.3s;
             box-sizing: border-box;
+            background-color: white;
         }
         
-        .form-group input:focus {
+        .form-group input:focus, 
+        .form-group select:focus {
             border-color: var(--accent-color);
             outline: none;
             box-shadow: 0 0 0 3px rgba(192, 57, 43, 0.1);
@@ -519,7 +522,6 @@
                 flex-direction: column;
                 padding: 20px 0;
                 box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-                /* Скрыто по умолчанию */
                 transform: translateY(-150%);
                 transition: transform 0.3s ease-in-out;
                 z-index: 1001;
@@ -599,7 +601,6 @@
                     <p data-translate="about_p3">Это работа не с диагнозом, а с Живым Человеком во всей его многогранности.</p>
                 </div>
                 <div>
-                    <!-- <img src="https://placehold.co/600x500/2c3e50/ffffff?text=Therapy+Session" alt="Сеанс терапии" class="img-rounded"> -->
                     <img src="https://laspii.github.io/bio-energy-system-therapy/seanse_best.png" alt="Сеанс терапии" class="img-rounded">
                 </div>
             </div>
@@ -673,7 +674,6 @@
         <div class="container">
             <div class="grid-2-center">
                 <div class="text-center">
-                    <!-- <img src="https://placehold.co/400x400/ffffff/2c3e50?text=Master" alt="Мастер" class="img-circle"> -->
                     <img src="https://laspii.github.io/bio-energy-system-therapy/master_best.png" alt="Мастер" class="img-circle">
                 </div>
                 <div>
@@ -718,6 +718,15 @@
                     <div class="form-group">
                         <label for="email" data-translate="label_email">Email</label>
                         <input type="email" id="email" name="email" placeholder="example@gmail.com">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="city" data-translate="label_city">Город обучения *</label>
+                        <select id="city" name="city" required>
+                            <option value="" disabled selected data-translate="placeholder_city">Выберите город</option>
+                            <option value="Одесса" data-translate="city_odessa">Одесса</option>
+                            <option value="Харьков" data-translate="city_kharkiv">Харьков</option>
+                        </select>
                     </div>
 
                     <div class="form-group">
@@ -779,7 +788,7 @@
                 level2_title: '2. Биоэнергетический',
                 level2_desc: 'Синхронизация ритмов дыхания, восстановление жизненной силы и естественного природного состояния организма.',
                 level3_title: '3. Эмоциональный',
-                level3_desc: 'Визволення "вантажу минулого". Тіло саме позбавляється стресу через реакції (тремтіння, крик, сміх) — настає катарсис.',
+                level3_desc: 'Высвобождение "груза прошлого". Тело само избавляется от стресса через реакции (дрожь, крик, смех) — наступает катарсис.',
                 level4_title: '4. Ментальный',
                 level4_desc: 'Вербальное общение, изменение ложных убеждений и работа с сознанием, близкая к гипнотерапии.',
                 resource_title: 'Секрет долголетия в профессии',
@@ -792,6 +801,10 @@
                 label_name: 'Ваше имя *',
                 label_phone: 'Ваш телефон *',
                 label_email: 'Email',
+                label_city: 'Город обучения *',
+                placeholder_city: 'Выберите город',
+                city_odessa: 'Одесса',
+                city_kharkiv: 'Харьков',
                 label_referrer: 'Кто порекомендовал',
                 placeholder_name: 'Иван Иванов',
                 placeholder_phone: '+380 (XX) XXX-XX-XX',
@@ -810,10 +823,10 @@
                 nav_depth: 'Глибина',
                 nav_training: 'Навчання',
                 hero_title: 'БЕСТ: Більше, ніж масаж',
-                hero_subtitle: 'Унікальна система зцілення душі через тіло. <br>Від новачка до майстра за один фундаментальный курс.',
+                hero_subtitle: 'Унікальна система зцілення душі через тіло. <br>Від новачка до майстра за один фундаментальний курс.',
                 hero_btn: 'Записатися на курс',
                 about_title: 'Спадщина Зуєва',
-                about_p1: '<strong>Біо-Енерго-Системо-Терапія (БЕСТ)</strong> — це авторський метод Є.Й. Зуєва, який випередив свій час. Це синтез стародавніх східних практик, класичної медицини, психології та інтуїтивного цілительства.',
+                about_p1: '<strong>Біо-Енерго-Системо-Терапія (БЕСТ)</strong> — це авторська система Є.Й. Зуєва, заснована на знаннях <strong>йоги, акупунктури, дихальних практик та психотерапії</strong>. Це синтез стародавніх східних знань та сучасної науки.',
                 about_p2: 'Метод працює з "пам\'яттю тіла". Будь-яка непережита емоція, стрес або травма залишають слід у м\'язах і фасціях. Звичайний масаж може розім\'яти м\'яз, але БЕСТ знаходить <em>причину</em> напруги і "вимикає" її через роботу з нервовою системою та біополем.',
                 about_p3: 'Це робота не з діагнозом, а з Живою Людиною у всій її багатогранності.',
                 audience_title: 'Кому необхідна ця навичка?',
@@ -828,13 +841,15 @@
                 pro_li1: '<strong>Робота зі "складними" клієнтами:</strong> Коли класика не допомагає і біль повертається, БЕСТ прибирає психосоматичний корінь.',
                 pro_li2: '<strong>Енергетична безпека:</strong> Ви перестанете втомлюватися і "брати на себе" чужі проблеми.',
                 pro_li3: '<strong>Розширення прайсу:</strong> Ексклюзивна послуга коштує дорожче звичайного сеансу.',
-                depth_title: 'Грані Методу',
-                tech1_title: 'Діагностика дотиком',
-                tech1_desc: 'Ви навчитеся визначати зони застою енергії ("холодні" зони) і запалення ("гарячі" зони) ще до того, як клієнт розповість про свої скарги. Руки стають чутливим сканером.',
-                tech2_title: 'Зняття "Панцира"',
-                tech2_desc: 'Термін Вільгельма Райха "м\'язовий панцир" тут знаходить практичне рішення. БЕСТ використовує розтяжки, вібрації і точковий вплив, щоб звільнити тіло від скутості.',
-                tech3_title: 'Робота з потоком',
-                tech3_desc: 'Безконтактні техніки дозволяють вирівнювати біополе, відновлювати сон і гармонізувати емоційний стан клієнта без жорсткого фізичного втручання.',
+                depth_title: '4 Рівні Контакту',
+                level1_title: '1. Фізичний',
+                level1_desc: 'Робота з меридіанами, зонами та больовими точками. Через руки майстра та дихання усуваються накопичені блоки.',
+                level2_title: '2. Біоенергетичний',
+                level2_desc: 'Синхронізація ритмів дихання, відновлення життєвої сили та природного стану організму.',
+                level3_title: '3. Емоційний',
+                level3_desc: 'Визволення "вантажу минулого". Тіло саме позбавляється стресу через реакції (тремтіння, крик, сміх) — настає катарсис.',
+                level4_title: '4. Ментальний',
+                level4_desc: 'Вербальне спілкування, зміна хибних переконань та робота зі свідомістю, близька до гіпнотерапії.',
                 resource_title: 'Секрет довголіття в професії',
                 resource_p1: 'Багато масажистів йдуть з професії через 5-7 років через проблеми з суглобами і вигорання. Метод БЕСТ вчить ергономіці рухів і енергетичній гігієні.',
                 resource_p2: 'Ви працюєте не силою м\'язів, а вагою тіла і потоком енергії. Після сеансу ви відчуваєте приплив сил, а не спустошення.',
@@ -845,12 +860,16 @@
                 label_name: 'Ваше ім\'я *',
                 label_phone: 'Ваш телефон *',
                 label_email: 'Email',
+                label_city: 'Місто навчання *',
+                placeholder_city: 'Оберіть місто',
+                city_odessa: 'Одеса',
+                city_kharkiv: 'Харків',
                 label_referrer: 'Хто порекомендував',
                 placeholder_name: 'Іван Іванов',
                 placeholder_phone: '+380 (XX) XXX-XX-XX',
                 placeholder_referrer: 'Ім\'я рекомендателя або звідки дізналися',
                 btn_submit: 'Відправити заявку',
-                footer_copy: '&copy; 2024 Академія БЕСТ. Всі права захищені.',
+                footer_copy: '&copy; 2025-2026 Обучение БЭСТ.',
                 footer_disclaimer: 'Інформація носить ознайомлювальний характер.',
                 msg_success: 'Дякуємо! Ваша заявка успішно відправлена.',
                 msg_error: 'Помилка при відправці. Будь ласка, перевірте з\'єднання або зателефонуйте нам.',
